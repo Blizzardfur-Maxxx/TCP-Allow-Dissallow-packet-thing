@@ -103,6 +103,7 @@ if __name__ == "__main__":
     parser.add_argument("remote_port", type=int, nargs='?', help="Remote server port")
     parser.add_argument("--client", action="store_true", help="Enable manual approval mode for packets from client to server")
     parser.add_argument("--server", action="store_true", help="Enable manual approval mode for packets from server to client")
+    parser.add_argument("--decode", action="store_true", help="Decode packet contents as UTF-8")
     args = parser.parse_args()
 
     if not args.remote_host or not args.remote_port:
@@ -123,8 +124,10 @@ if __name__ == "__main__":
 
     manual_approval_client = args.client
     manual_approval_server = args.server
+    decode_packets = args.decode
 
-    decode_choice = input("Decode packet contents? (y/n): ").strip().lower()
-    decode_packets = True if decode_choice == 'y' else False
+    if not decode_packets:
+        decode_choice = input("Decode packet contents? (y/n): ").strip().lower()
+        decode_packets = True if decode_choice == 'y' else False
 
     proxy_server('127.0.0.1', 25567, args.remote_host, args.remote_port, manual_approval_client, manual_approval_server, decode_packets)
