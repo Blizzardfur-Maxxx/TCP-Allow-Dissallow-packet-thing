@@ -4,50 +4,7 @@ import argparse
 import binascii
 
 def handle_client(client_socket, remote_socket, manual_approval_client, decode_packets):
-    while True:
-        try:
-            data = client_socket.recv(4096)
-            if not data:
-                break
-            decoded_data = ""
-            if decode_packets:
-                try:
-                    decoded_data = data.decode('utf-8')
-                except UnicodeDecodeError:
-                    pass
-            else:
-                decoded_data = binascii.hexlify(data).decode('utf-8')
-            if decoded_data:
-                print("[Received from client]", decoded_data)
-
-            if manual_approval_client:
-                print("Approve this packet from client to server? (Press Enter for default 'y')")
-                approve = input().strip().lower()
-                if approve == '' or approve == 'y':
-                    remote_socket.send(data)
-                else:
-                    print("Packet not approved.")
-                    continue
-            else:
-                remote_socket.send(data)
-
-            remote_data = remote_socket.recv(4096)
-            if not remote_data:
-                break
-            decoded_remote_data = ""
-            if decode_packets:
-                try:
-                    decoded_remote_data = remote_data.decode('utf-8')
-                except UnicodeDecodeError:
-                    pass
-            else:
-                decoded_remote_data = binascii.hexlify(remote_data).decode('utf-8')
-            if decoded_remote_data:
-                print("[Sent from client]", decoded_remote_data)
-            client_socket.send(remote_data)
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            break
+    pass
 
 
 def handle_server(client_socket, remote_socket, manual_approval_server, decode_packets):
