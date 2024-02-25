@@ -4,6 +4,7 @@ import argparse
 import binascii
 
 def handle_client(client_socket, remote_socket, manual_approval_client, decode_packets):
+    print("ima dumbass why can get it working rn and cant delete it eitehr without breaking everyting")
     pass
 
 
