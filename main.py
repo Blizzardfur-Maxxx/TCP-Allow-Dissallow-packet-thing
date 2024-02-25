@@ -1,7 +1,7 @@
 import socket
 import threading
 
-def handle_incomming(client_socket, remote_socket):
+def handle_incoming(client_socket, remote_socket):
     while True:
         data = client_socket.recv(4096)
         if not data:
@@ -37,7 +37,7 @@ def proxy_server(local_host, local_port, remote_host, remote_port):
         remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         remote_socket.connect((remote_host, remote_port))
 
-        proxy_thread = threading.Thread(target=handle_incomming, args=(client_socket, remote_socket))
+        proxy_thread = threading.Thread(target=handle_incoming, args=(client_socket, remote_socket))
         proxy_thread.start()
 
 if __name__ == "__main__":
